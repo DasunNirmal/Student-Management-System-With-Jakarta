@@ -10,7 +10,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>Demo</servlet-name>
-        <servlet-class>lk.ijse.studentmanagementsystemwithjee.StudentController</servlet-class>
+        <servlet-class>lk.ijse.studentmanagementsystemwithjee.controller.StudentController</servlet-class>
         <load-on-startup>-1</load-on-startup>
     </servlet>
 </web-app>

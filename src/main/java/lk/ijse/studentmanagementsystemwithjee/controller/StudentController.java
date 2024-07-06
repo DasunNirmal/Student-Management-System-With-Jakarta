@@ -1,4 +1,4 @@
-package lk.ijse.studentmanagementsystemwithjee;
+package lk.ijse.studentmanagementsystemwithjee.controller;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
@@ -9,9 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = "/Student")
 public class StudentController extends HttpServlet {
@@ -19,6 +17,7 @@ public class StudentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /*Todo: Save Student details*/
+
         if (!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null) {
             /*Send Error*/
             resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
@@ -33,18 +32,28 @@ public class StudentController extends HttpServlet {
         writer.write(sb.toString());
         writer.close();*/
 
-        /*JSON Manipulation with Parson*/
+        /*JSON Manipulation with Parson(parson is a library)*/
         JsonReader reader = Json.createReader(req.getReader());
-        JsonObject jsonObject = reader.readObject();
-        System.out.println(jsonObject.getString("name"));
-        System.out.println(jsonObject.getString("city"));
-        System.out.println(jsonObject.getString("email"));
+        JsonObject jObject = reader.readObject();
+        System.out.println(jObject.getString("name"));
+        System.out.println(jObject.getString("city"));
+        System.out.println(jObject.getString("email"));
+
+        /*JSON Manipulation with Parson(parson is a library) using Array*/
+        /*JsonArray jsonArray = reader.readArray();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject jsonObject = jsonArray.getJsonObject(i);
+            System.out.println(jsonObject.getString("name"));
+            System.out.println(jsonObject.getString("city"));
+            System.out.println(jsonObject.getString("email"));
+        }*/
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /*Todo:Get Student details*/
     }
+
 
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /*Todo:Update Student details*/
