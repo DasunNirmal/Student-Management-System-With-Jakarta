@@ -13,4 +13,20 @@
         <servlet-class>lk.ijse.studentmanagementsystemwithjee.controller.StudentController</servlet-class>
         <load-on-startup>-1</load-on-startup>
     </servlet>
+    <context-param>
+        <param-name>driver-class</param-name>
+        <param-value>com.mysql.cj.jdbc.Driver</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbURL</param-name>
+        <param-value>jdbc:mysql://localhost:3306/JakarthaEE?createDatabaseIfNotExist=true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbUserName</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbPassword</param-name>
+        <param-value>Ijse@1234</param-value>
+    </context-param>
 </web-app>
