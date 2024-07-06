@@ -17,13 +17,8 @@ import java.io.PrintWriter;
 public class StudentController extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*Todo:save student*/
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*Todo:*/
+        /*Todo: Save Student details*/
         if (!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null) {
             /*Send Error*/
             resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
@@ -41,16 +36,23 @@ public class StudentController extends HttpServlet {
         /*JSON Manipulation with Parson*/
         JsonReader reader = Json.createReader(req.getReader());
         JsonObject jsonObject = reader.readObject();
+        System.out.println(jsonObject.getString("name"));
+        System.out.println(jsonObject.getString("city"));
         System.out.println(jsonObject.getString("email"));
     }
 
-    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        /*Todo:Get Student details*/
+    }
 
+    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        /*Todo:Update Student details*/
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*Todo:Delete Student*/
+        /*Todo:Delete Student details*/
     }
 
 }
