@@ -18,6 +18,7 @@ import lk.ijse.studentmanagementsystemwithjee.entity.Student;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class StudentController extends HttpServlet {
     Connection connection;
 
     static String SAVE_STUDENT = "INSERT INTO Student VALUES (?,?,?,?,?)";
+    static String GET_STUDENT = "SELECT * FROM Student WHERE id = ?";
 
     @Override
     public void init() throws ServletException {
@@ -116,6 +118,30 @@ public class StudentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /*Todo:Get Student details*/
+
+        var studentDTO = new StudentDTO();
+        var studentId = req.getParameter("id");
+
+        try (var writer = resp.getWriter()){
+            var ps = connection.prepareStatement(GET_STUDENT);
+            ps.setString(1, studentId);
+            var resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                studentDTO.setId(resultSet.getString("id"));
+                studentDTO.setName(resultSet.getString("name"));
+                studentDTO.setEmail(resultSet.getString("email"));
+                studentDTO.setCity(resultSet.getString("city"));
+                studentDTO.setLevel(resultSet.getString("level"));
+            }
+            System.out.print(studentDTO);
+            /*resp.getWriter().write(studentDTO.toString());*/ /*this will print as a system out on the interface(postman app)*/
+            resp.setContentType("application/json"); /*this tells the server to the sending value is a Jason type*/
+            var jsonb = JsonbBuilder.create();
+            jsonb.toJson(studentDTO, resp.getWriter()); /*because this values need to be printed to the front end we need to pass the Writer rather than Reader*/
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
