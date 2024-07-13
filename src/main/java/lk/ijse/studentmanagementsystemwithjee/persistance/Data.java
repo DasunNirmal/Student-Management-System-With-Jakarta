@@ -8,6 +8,6 @@ import java.sql.SQLException;
 public interface Data {
     StudentDTO getStudent(String id, Connection connection);
     boolean saveStudent(StudentDTO studentDTO, Connection connection);
-    boolean deleteStudent(String id, Connection connection) throws SQLException;
-    boolean updateStudent(String id, StudentDTO studentDTO, Connection connection) throws SQLException;
+    boolean deleteStudent(String id, Connection connection);
+    boolean updateStudent(String id, StudentDTO studentDTO, Connection connection);
 }

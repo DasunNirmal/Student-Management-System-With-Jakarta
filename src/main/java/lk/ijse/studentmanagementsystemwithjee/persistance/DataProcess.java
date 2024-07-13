@@ -49,29 +49,29 @@ public class DataProcess implements Data {
     }
 
     @Override
-    public boolean deleteStudent(String id, Connection connection) throws SQLException {
-        var ps = connection.prepareStatement(DELETE_STUDENT);
+    public boolean deleteStudent(String id, Connection connection) {
         try {
+            var ps = connection.prepareStatement(DELETE_STUDENT);
             ps.setString(1, id);
+            return ps.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return ps.executeUpdate() != 0;
     }
 
     @Override
-    public boolean updateStudent(String id, StudentDTO studentDTO, Connection connection) throws SQLException {
-        var ps = connection.prepareStatement(UPDATE_STUDENT);
+    public boolean updateStudent(String id, StudentDTO studentDTO, Connection connection) {
 
         try {
+            var ps = connection.prepareStatement(UPDATE_STUDENT);
             ps.setString(1, studentDTO.getName());
             ps.setString(2, studentDTO.getEmail());
             ps.setString(3, studentDTO.getCity());
             ps.setString(4, studentDTO.getLevel());
             ps.setString(5, id);
+            return ps.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return ps.executeUpdate() != 0;
     }
 }

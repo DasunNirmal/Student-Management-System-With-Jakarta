@@ -94,6 +94,7 @@ public class StudentController extends HttpServlet {
 
         /*Persist Data to the Database using mysql*/
         try(var writer = resp.getWriter()) {
+
             Jsonb jsonb = JsonbBuilder.create();
             StudentDTO studentDTO = jsonb.fromJson(req.getReader(), StudentDTO.class);
             studentDTO.setId(UtilProcess.generateID());
@@ -105,6 +106,7 @@ public class StudentController extends HttpServlet {
                 writer.write("Something went wrong");
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
+
         } catch (JsonException e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             throw new RuntimeException(e);
@@ -119,11 +121,13 @@ public class StudentController extends HttpServlet {
         DataProcess dataProcess = new DataProcess();
 
         try (var writer = resp.getWriter()){
+
             var student = dataProcess.getStudent(studentId, connection);
             System.out.println(student);
             resp.setContentType("application/json"); /*this tells the server to the sending value is a Jason type*/
             var jsonb = JsonbBuilder.create();
             jsonb.toJson(student, writer);/*this will print as a system out on the interface(postman app) because this values need to be printed to the front end we need to pass the Writer rather than Reader*/
+
         }
     }
 
@@ -134,8 +138,11 @@ public class StudentController extends HttpServlet {
             /*Send Error*/
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
+
         DataProcess dataProcess = new DataProcess();
+
         try(var writer = resp.getWriter()) {
+
             var studentID = req.getParameter("stu-id");
             Jsonb jsonb = JsonbBuilder.create();
             var studentDTO = jsonb.fromJson(req.getReader(), StudentDTO.class);
@@ -147,7 +154,7 @@ public class StudentController extends HttpServlet {
                 writer.write("Update Failed");
             }
 
-        } catch (SQLException e) {
+        } catch (JsonException e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
@@ -160,7 +167,9 @@ public class StudentController extends HttpServlet {
             /*Send Error*/
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
+
         var studentID = req.getParameter("stu-id");
+
         try {
             boolean deleteStudent = new DataProcess().deleteStudent(studentID, connection);
 
@@ -171,7 +180,7 @@ public class StudentController extends HttpServlet {
                 resp.getWriter().write("Student Not Deleted");
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
-        } catch (SQLException e) {
+        } catch (JsonException e) {
             throw new RuntimeException(e);
         }
 
