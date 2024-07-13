@@ -8,6 +8,7 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebInitParam;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,12 @@ import java.util.List;
 import java.util.UUID;
 
 @WebServlet(urlPatterns = "/student")
+/*initParams ={
+        @WebInitParam(name = "driver-class", value = "com.mysql.cj.jdbc.Driver"),
+        @WebInitParam(name = "dbURL", value = "jdbc:mysql://localhost:3306/JakarthaEE?createDatabaseIfNotExist=true"),
+        @WebInitParam(name = "dbUserName", value = "root"),
+        @WebInitParam(name = "dbPassword", value = "Ijse@1234")
+}*/
 public class StudentController extends HttpServlet {
 
     Connection connection;
@@ -162,8 +169,8 @@ public class StudentController extends HttpServlet {
             ps.setString(4, studentDTO.getLevel());
             ps.setString(5, studentID);
             if(ps.executeUpdate() != 0) {
-              resp.getWriter().write("Student Updated");
-              resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                resp.getWriter().write("Student Updated");
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
             } else {
                 resp.getWriter().write("Student Not Updated");
                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -200,3 +207,4 @@ public class StudentController extends HttpServlet {
     }
 
 }
+
