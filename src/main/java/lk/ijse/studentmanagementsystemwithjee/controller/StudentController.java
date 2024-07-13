@@ -30,6 +30,7 @@ public class StudentController extends HttpServlet {
     static String SAVE_STUDENT = "INSERT INTO Student VALUES (?,?,?,?,?)";
     static String GET_STUDENT = "SELECT * FROM Student WHERE id = ?";
     static String UPDATE_STUDENT = "UPDATE Student SET name = ?, email = ?, city = ?, level = ? WHERE id = ?";
+    static String DELETE_STUDENT = "DELETE FROM Student WHERE id = ?";
 
     @Override
     public void init() throws ServletException {
@@ -176,6 +177,26 @@ public class StudentController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /*Todo:Delete Student details*/
+
+        if (!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null) { /*checks if it's a jason type using header*/
+            /*Send Error*/
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        var studentID = req.getParameter("stu-id");
+        try {
+            var ps = this.connection.prepareStatement(DELETE_STUDENT);
+            ps.setString(1, studentID);
+            if (ps.executeUpdate() != 0) {
+                resp.getWriter().write("Student Deleted");
+                resp.sendError(HttpServletResponse.SC_NO_CONTENT);
+            } else {
+                resp.getWriter().write("Student Not Deleted");
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
