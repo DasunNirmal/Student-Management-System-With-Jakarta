@@ -98,8 +98,15 @@ public class StudentController extends HttpServlet {
             StudentDTO studentDTO = jsonb.fromJson(req.getReader(), StudentDTO.class);
             studentDTO.setId(UtilProcess.generateID());
             var saveData = new DataProcess();
-            writer.write(saveData.saveStudent(studentDTO, connection));
+            if(saveData.saveStudent(studentDTO, connection)) {
+                writer.write("Successfully Saved");
+                resp.setStatus(HttpServletResponse.SC_CREATED);
+            } else {
+                writer.write("Something went wrong");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            }
         } catch (JsonException e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             throw new RuntimeException(e);
         }
     }

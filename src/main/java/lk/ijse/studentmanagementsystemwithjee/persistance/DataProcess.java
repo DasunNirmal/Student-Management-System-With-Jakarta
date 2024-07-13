@@ -33,7 +33,7 @@ public class DataProcess implements Data {
     }
 
     @Override
-    public String saveStudent(StudentDTO studentDTO, Connection connection) {
+    public boolean saveStudent(StudentDTO studentDTO, Connection connection) {
         try {
             var ps = connection.prepareStatement(SAVE_STUDENT);
             ps.setString(1, studentDTO.getId());
@@ -42,12 +42,7 @@ public class DataProcess implements Data {
             ps.setString(4, studentDTO.getCity());
             ps.setString(5, studentDTO.getLevel());
 
-            if(ps.executeUpdate() != 0 ) {
-                return "Student Saved";
-                /*resp.setStatus(HttpServletResponse.SC_CREATED);*/ /*this will return 201 as status code means he request succeeded, and a new resource was created.*/
-            } else {
-                return "Student Not Saved";
-            }
+            return ps.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
