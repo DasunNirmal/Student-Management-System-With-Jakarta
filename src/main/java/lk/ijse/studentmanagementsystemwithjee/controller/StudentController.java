@@ -162,7 +162,7 @@ public class StudentController extends HttpServlet {
             ps.setString(5, studentID);
             if(ps.executeUpdate() != 0) {
               resp.getWriter().write("Student Updated");
-              /*resp.setStatus(HttpServletResponse.SC_NO_CONTENT);*/
+              resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
             } else {
                 resp.getWriter().write("Student Not Updated");
                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
