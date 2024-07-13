@@ -2,7 +2,6 @@ package lk.ijse.studentmanagementsystemwithjee.persistance;
 
 import lk.ijse.studentmanagementsystemwithjee.dto.StudentDTO;
 
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -35,16 +34,49 @@ public class DataProcess implements Data {
 
     @Override
     public String saveStudent(StudentDTO studentDTO, Connection connection) {
-        return "";
+        try {
+            var ps = connection.prepareStatement(SAVE_STUDENT);
+            ps.setString(1, studentDTO.getId());
+            ps.setString(2, studentDTO.getName());
+            ps.setString(3, studentDTO.getEmail());
+            ps.setString(4, studentDTO.getCity());
+            ps.setString(5, studentDTO.getLevel());
+
+            if(ps.executeUpdate() != 0 ) {
+                return "Student Saved";
+                /*resp.setStatus(HttpServletResponse.SC_CREATED);*/ /*this will return 201 as status code means he request succeeded, and a new resource was created.*/
+            } else {
+                return "Student Not Saved";
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public boolean deleteStudent(String id, Connection connection) {
-        return false;
+    public boolean deleteStudent(String id, Connection connection) throws SQLException {
+        var ps = connection.prepareStatement(DELETE_STUDENT);
+        try {
+            ps.setString(1, id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ps.executeUpdate() != 0;
     }
 
     @Override
-    public boolean updateStudent(String id, StudentDTO studentDTO, Connection connection) {
-        return false;
+    public int updateStudent(String id, StudentDTO studentDTO, Connection connection) throws SQLException {
+        var ps = connection.prepareStatement(UPDATE_STUDENT);
+
+        try {
+            ps.setString(1, studentDTO.getName());
+            ps.setString(2, studentDTO.getEmail());
+            ps.setString(3, studentDTO.getCity());
+            ps.setString(4, studentDTO.getLevel());
+            ps.setString(5, id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ps.executeUpdate();
     }
 }
