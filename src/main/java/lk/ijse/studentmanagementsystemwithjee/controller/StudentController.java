@@ -157,7 +157,6 @@ public class StudentController extends HttpServlet {
         try {
             boolean deleteStudent = new DataProcess().deleteStudent(studentID, connection);
 
-
             if (deleteStudent) {
                 resp.getWriter().write("Student Deleted");
                 resp.sendError(HttpServletResponse.SC_NO_CONTENT);
