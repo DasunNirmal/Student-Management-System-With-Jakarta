@@ -132,8 +132,8 @@ public class StudentController extends HttpServlet {
             var studentID = req.getParameter("stu-id");
             Jsonb jsonb = JsonbBuilder.create();
             var studentDTO = jsonb.fromJson(req.getReader(), StudentDTO.class);
-            int rowsAffected = dataProcess.updateStudent(studentID, studentDTO, connection);
-            if(rowsAffected != 0) {
+            boolean rowsAffected = dataProcess.updateStudent(studentID, studentDTO, connection);
+            if(rowsAffected) {
                 resp.getWriter().write("Student Updated");
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
             } else {

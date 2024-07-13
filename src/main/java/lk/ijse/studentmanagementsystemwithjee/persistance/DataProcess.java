@@ -65,7 +65,7 @@ public class DataProcess implements Data {
     }
 
     @Override
-    public int updateStudent(String id, StudentDTO studentDTO, Connection connection) throws SQLException {
+    public boolean updateStudent(String id, StudentDTO studentDTO, Connection connection) throws SQLException {
         var ps = connection.prepareStatement(UPDATE_STUDENT);
 
         try {
@@ -77,6 +77,6 @@ public class DataProcess implements Data {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return ps.executeUpdate();
+        return ps.executeUpdate() != 0;
     }
 }
