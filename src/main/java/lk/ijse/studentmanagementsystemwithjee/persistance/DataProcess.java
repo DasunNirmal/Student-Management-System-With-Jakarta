@@ -5,7 +5,7 @@ import lk.ijse.studentmanagementsystemwithjee.dto.StudentDTO;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DataProcess implements Data {
+public final class DataProcess implements Data {
 
     static String SAVE_STUDENT = "INSERT INTO Student VALUES (?,?,?,?,?)";
     static String GET_STUDENT = "SELECT * FROM Student WHERE id = ?";
