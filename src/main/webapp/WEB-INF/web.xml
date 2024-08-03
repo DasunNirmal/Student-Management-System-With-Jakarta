@@ -5,12 +5,12 @@
          version="6.0">
 
     <servlet-mapping>
-        <servlet-name>Demo</servlet-name>
-        <url-pattern>/health</url-pattern>
+        <servlet-name>StudentController</servlet-name>
+        <url-pattern>/student</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>Demo</servlet-name>
-        <servlet-class>lk.ijse.studentmanagementsystemwithjee.controller.StudentController</servlet-class>
+        <servlet-name>StudentController</servlet-name>
+        <servlet-class>lk.ijse.studentmanagementsystemwithjee.controller.StudentController</servlet-class> <!--full qualified class path-->
         <load-on-startup>-1</load-on-startup>
     </servlet>
     <context-param>
