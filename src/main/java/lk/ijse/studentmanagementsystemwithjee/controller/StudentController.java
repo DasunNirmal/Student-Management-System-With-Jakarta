@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.sql.*;
 
 
-@WebServlet(urlPatterns = "/student")
+/*@WebServlet(urlPatterns = "/student")*/
 /*initParams ={
         @WebInitParam(name = "driver-class", value = "com.mysql.cj.jdbc.Driver"),
         @WebInitParam(name = "dbURL", value = "jdbc:mysql://localhost:3306/JakarthaEE?createDatabaseIfNotExist=true"),
