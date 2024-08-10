@@ -15,11 +15,14 @@ import lk.ijse.studentmanagementsystemwithjee.entity.Student;
 import lk.ijse.studentmanagementsystemwithjee.persistance.DataProcess;
 import lk.ijse.studentmanagementsystemwithjee.util.UtilProcess;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.*;
 
 
-/*@WebServlet(urlPatterns = "/student")*/
+@WebServlet(urlPatterns = "/student")
 /*initParams ={
         @WebInitParam(name = "driver-class", value = "com.mysql.cj.jdbc.Driver"),
         @WebInitParam(name = "dbURL", value = "jdbc:mysql://localhost:3306/JakarthaEE?createDatabaseIfNotExist=true"),
@@ -34,14 +37,16 @@ public class StudentController extends HttpServlet {
     public void init() throws ServletException {
 
         try {
-            var driver = getServletContext().getInitParameter("driver-class"); /*type inference*/
+            /*var driver = getServletContext().getInitParameter("driver-class"); *//*type inference*//*
             var url = getServletContext().getInitParameter("dbURL");
             var user = getServletContext().getInitParameter("dbUserName");
-            var password = getServletContext().getInitParameter("dbPassword");
-            Class.forName(driver);
-            this.connection = DriverManager.getConnection(url,user,password);
+            var password = getServletContext().getInitParameter("dbPassword");*/
 
-        } catch (ClassNotFoundException | SQLException e) {
+            var ctx = new InitialContext();
+            DataSource pool = (DataSource) ctx.lookup("java:comp/env/jdbc/studentRegistration");
+            this.connection = pool.getConnection();
+
+        } catch (NamingException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
