@@ -96,7 +96,7 @@ public class StudentController extends HttpServlet {
         try(var writer = resp.getWriter()) {
 
             Jsonb jsonb = JsonbBuilder.create();
-            StudentDTO studentDTO = jsonb.fromJson(req.getReader(), StudentDTO.class);
+            StudentDTO studentDTO = jsonb.fromJson(req.getReader(), StudentDTO.class); /*This binds the jason object to java object(deserialization)*/
             studentDTO.setId(UtilProcess.generateID());
             var saveData = new DataProcess();
             if(saveData.saveStudent(studentDTO, connection)) {
@@ -126,7 +126,7 @@ public class StudentController extends HttpServlet {
             System.out.println(student);
             resp.setContentType("application/json"); /*this tells the server to the sending value is a Jason type*/
             var jsonb = JsonbBuilder.create();
-            jsonb.toJson(student, writer);/*this will print as a system out on the interface(postman app) because this values need to be printed to the front end we need to pass the Writer rather than Reader*/
+            jsonb.toJson(student, writer); /*this will binds the java object into a jason object(serialization)*/
 
         }
     }
