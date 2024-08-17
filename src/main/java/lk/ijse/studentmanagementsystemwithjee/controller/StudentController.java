@@ -39,6 +39,7 @@ public class StudentController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
+
         logger.info("Initializing StudentController with call int method..");
         try {
             /*var driver = getServletContext().getInitParameter("driver-class"); *//*type inference*//*
