@@ -1,12 +1,12 @@
 <configuration>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"> <!--Consol appender os there to print the log on to the Consol-->
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern>
         </encoder>
     </appender>
 
-    <appender name="File" class="ch.qos.logback.core.FileAppender">
+    <appender name="File" class="ch.qos.logback.core.FileAppender"> <!--File appender os there to print the log on to a File named app.log-->
         <file>/home/dasunnirmal/IdeaProjects/StudentManagementSystemWithJEE/app.log</file>
         <append>true</append>
         <encoder>
