@@ -1,5 +1,6 @@
 package lk.ijse.studentmanagementsystemwithjee.controller;
 
+import com.mysql.cj.log.LogFactory;
 import jakarta.json.*;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
@@ -14,6 +15,8 @@ import lk.ijse.studentmanagementsystemwithjee.dto.StudentDTO;
 import lk.ijse.studentmanagementsystemwithjee.entity.Student;
 import lk.ijse.studentmanagementsystemwithjee.persistance.DataProcess;
 import lk.ijse.studentmanagementsystemwithjee.util.UtilProcess;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -22,7 +25,7 @@ import java.io.IOException;
 import java.sql.*;
 
 
-@WebServlet(urlPatterns = "/student")
+@WebServlet(urlPatterns = "/student", loadOnStartup = 2)
 /*initParams ={
         @WebInitParam(name = "driver-class", value = "com.mysql.cj.jdbc.Driver"),
         @WebInitParam(name = "dbURL", value = "jdbc:mysql://localhost:3306/JakarthaEE?createDatabaseIfNotExist=true"),
@@ -31,11 +34,12 @@ import java.sql.*;
 }*/
 public class StudentController extends HttpServlet {
 
+    static Logger logger = LoggerFactory.getLogger(StudentController.class);
     Connection connection;
 
     @Override
     public void init() throws ServletException {
-
+        logger.info("Initializing StudentController with call int method..");
         try {
             /*var driver = getServletContext().getInitParameter("driver-class"); *//*type inference*//*
             var url = getServletContext().getInitParameter("dbURL");
